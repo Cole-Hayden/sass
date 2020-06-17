@@ -1,47 +1,65 @@
-@import './resets';
-@import './variables';
+@import "./resets";
+@import "./variables";
 
 @function weight($weight-name) {
-    @return map-get($font-weights, $weight-name);
+  @return map-get($font-weights, $weight-name);
 }
 
 body {
-    background: $primary-color;
-    color: $text-color;
-    font-weight: map-get($font-weights, bold);
+  background: $primary-color;
+  color: $text-color;
+  font-weight: map-get($font-weights, bold);
 }
 
 @mixin flexCenter($direction) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: $direction;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
 }
 
 @mixin theme($light-theme: true) {
-    @if $light-theme {
-        background: lighten(primary-color, 100%);
-        color: darken($text-color, 100%);
-    }
+  @if $light-theme {
+    background: lighten(primary-color, 100%);
+    color: darken($text-color, 100%);
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
 }
 
 .main {
-    @include flexCenter(row);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    margin: 0 auto;
+  @include flexCenter(row);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80% - 40%;
+  margin: 0 auto;
 
-    #{&}__paragraph {
-        font-weight: weight(regular);
+  #{&}__paragraph1 {
+    font-weight: weight(regular);
 
-        &:hover {
-            color: pink;
-        }
+    &:hover {
+      color: pink;
     }
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+#{&}__paragraph2 {
+  @extend .main__paragraph1;
+
+  &:hover {
+    color: $accent-color;
+  }
 }
 
 .light {
-    @include theme($light-theme: true);
+  @include theme($light-theme: true);
 }
